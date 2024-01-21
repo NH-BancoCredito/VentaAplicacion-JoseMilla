@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+	<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+	<ContainerImageName>Venta.Application</ContainerImageName>
+	<ContainerBaseImage>mcr.microsoft.com/dotnet/aspnet:8.0</ContainerBaseImage>
+	<ContainerImageTags>2.0.0;latest</ContainerImageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="CasosUso\AdministrarProductos\RegistrarProductos\**" />
+    <EmbeddedResource Remove="CasosUso\AdministrarProductos\RegistrarProductos\**" />
+    <None Remove="CasosUso\AdministrarProductos\RegistrarProductos\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+    <PackageReference Include="FluentValidation" Version="11.9.0" />
+    <PackageReference Include="MediatR" Version="12.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Venta.Domain\Venta.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

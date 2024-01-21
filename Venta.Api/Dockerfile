@@ -1,0 +1,24 @@
+#See  h ttps://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
+
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
+WORKDIR /app
+EXPOSE 80
+EXPOSE 443
+
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+WORKDIR /src
+COPY ["Venta.Api/Venta.Api.csproj", "app/Venta.Api/"]
+COPY ["Venta.Application/Venta.Application.csproj", "app/Venta.Application/"]
+COPY ["Venta.Domain/Venta.Domain.csproj", "app/Venta.Domain/"]
+COPY ["Venta.Infrastructure/Venta.Infrastructure.csproj", "app/Venta.Infrastructure/"]
+RUN dotnet restore "app/Venta.Api/Venta.Api.csproj"
+COPY . .
+WORKDIR "src/Venta.Api"
+
+FROM build AS publish
+RUN dotnet publish "Venta.Api.csproj" -c Release -o /app/publish  
+ 
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app/publish .
+ENTRYPOINT ["dotnet", "Venta.Api.dll"]

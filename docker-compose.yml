@@ -1,0 +1,46 @@
+version: '3.4'
+
+services:
+########################################################## venta.api ################################################################################
+  Venta.api:
+    image: ${DOCKER_REGISTRY-}Venta.api
+    container_name: Venta.Api
+    mem_limit: 256m
+    mem_reservation: 128M
+    cpus: 0.25
+    deploy:
+      replicas: 3
+    environment:      
+      - ASPNETCORE_URLS=http://::80
+    ports:
+      - "80" 
+    build:
+      context: .
+      dockerfile: Venta.Api/Dockerfile
+    networks:
+      - backend
+    restart: on-failure
+
+########################################################## Venta.DB ##################################################################################
+#ConnectionString
+#Venta.DB
+  Venta.db:
+    image: ${DOCKER_REGISTRY-}Venta.db
+    #container_name: Venta.DB
+    mem_limit: 1536m
+    mem_reservation: 128M
+    cpus: 1.0
+    ports:
+       - 14331:1433
+    volumes:
+      - ./Venta.DB/Docker/Data:/var/opt/mssql/Venta/data
+    build:
+      dockerfile: Venta.DB/Venta.DB/Dockerfile
+      context: .
+    networks:
+      - backend
+########################################################## networks #######################################################################################################
+networks:
+  backend:
+    name: backend
+    driver: bridge

@@ -1,0 +1,10 @@
+﻿CREATE TABLE [dbo].[Venta](
+	[IdVenta] [int] NOT NULL,
+	[IdCliente] [int] NOT NULL,
+	[Fecha] [datetime] NOT NULL,
+	[Monto] [decimal](18, 2) NOT NULL,
+ CONSTRAINT [PK_Venta] PRIMARY KEY CLUSTERED 
+(
+	[IdVenta] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON ) ON [PRIMARY]
+) ON [PRIMARY]

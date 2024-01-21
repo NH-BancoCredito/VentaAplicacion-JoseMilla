@@ -1,0 +1,26 @@
+version: '3.4'
+
+services:
+########################################################## Venta.db ##################################################################################
+#ConnectionString
+#Venta.db
+  Venta.db:
+    image: ${DOCKER_REGISTRY-}ventadb
+    container_name: Venta.db
+    mem_limit: 1536m
+    mem_reservation: 128M
+    cpus: 1.0
+    ports:
+       - 14331:1433
+    volumes:
+      - ./db/Venta.DB/Docker/Data:/var/opt/mssql/Venta/data
+    build:
+      dockerfile: Venta.DB/Venta.DB/Dockerfile
+      context: .
+    networks:
+      - backend
+########################################################## networks #######################################################################################################
+networks:
+  backend:
+    name: backend
+    driver: bridge
